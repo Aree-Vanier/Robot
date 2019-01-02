@@ -39,13 +39,10 @@ void Socket::webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_
   }
 }
 
-Socket::Socket() : WebSocketsServer(81) {
-  Serial.println("Setup");
-}
-
 void Socket::init(){
-  Serial.println("Initialised");
   webSocket.begin();
+
+  webSocket.onEvent(this->webSocketEvent);
 }
 
 void Socket::loop(){

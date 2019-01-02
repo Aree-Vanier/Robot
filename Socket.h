@@ -3,9 +3,8 @@
 #include <WebSocketsServer.h>
 
 
-class Socket: private WebSocketsServer {
+class Socket {
   public:
-    Socket();
     void init();
     void loop();
     bool enabled;
