@@ -42,16 +42,18 @@ void IO::init(Socket& s){
 }
 
 void IO::loop(){
+  //Get target regsiter
   int reg[2] = {digitalRead(regPins[0]), digitalRead(regPins[1])};
-  int selected = sock.getRegister(binToDec(reg, 2));
+  //Get value from register
+  int value = sock.getRegister(binToDec(reg, 2));
+  //Get the individual pin values
   int pins[this->numPinCount];
-  decToBin(selected, this->numPinCount, pins);
+  decToBin(value, this->numPinCount, pins);
+  //Set output pins
   for(int i = 0; i<this->numPinCount; i++){
-    Serial.print(i);
-    Serial.print(": ");
-    Serial.print(pins[i]);
-    Serial.print("\t");
     digitalWrite(this->numPins[i], pins[i]);
   }
-  Serial.println();
+  //Enable pin
+  if(sock.getEnabled()) digitalWrite(this->enablePin, HIGH);
+  else digitalWrite(this->enablePin, LOW);
 }
