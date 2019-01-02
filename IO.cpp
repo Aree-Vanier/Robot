@@ -19,6 +19,14 @@ void decToBin(int num, int bits, int* out){
   }
 }
 
+int binToDec(int* bits, int bitCount){
+  int out = 0;
+  for(int i = 0; i<bitCount; i++){
+    out+=pow(2,i)*bits[bitCount-1-i];
+  }
+  return out;
+}
+
 void IO::init(Socket& s){
   sock = s;
   pinMode(this->enablePin, OUTPUT);
@@ -34,12 +42,16 @@ void IO::init(Socket& s){
 }
 
 void IO::loop(){
-//  Enabled indicator
-  if(sock.getEnabled()){
-    digitalWrite(0, LOW);
-  } else{
-    digitalWrite(0, HIGH);
+  int reg[2] = {digitalRead(regPins[0]), digitalRead(regPins[1])};
+  int selected = sock.getRegister(binToDec(reg, 2));
+  int pins[this->numPinCount];
+  decToBin(selected, this->numPinCount, pins);
+  for(int i = 0; i<this->numPinCount; i++){
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.print(pins[i]);
+    Serial.print("\t");
+    digitalWrite(this->numPins[i], pins[i]);
   }
-
-  
+  Serial.println();
 }

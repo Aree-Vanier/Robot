@@ -8,9 +8,8 @@ class IO{
     void init(Socket& s);
     void loop();
   private:
-    byte reg; //Currently selected register
-    static const int numPinCount = 5;
-    static const int regCount = 4;
+    static const byte numPinCount = 5;
+    static const byte regCount = 4;
     //Numerating of pins
     const int enablePin = 13;//Pin used to inform arduino of enable status
     const int regPins[2] = {14,16};//Pins used to select register
