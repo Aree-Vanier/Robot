@@ -3,6 +3,7 @@
 #include <ESP8266WebServer.h>
 #include "Page.h"
 #include "Socket.h"
+#include "IO.h"
 
 //Network Info
 const char* ssid = "BELL995";
@@ -14,26 +15,10 @@ Page page;
 
 Socket socket;
 
-//Used to control output pins
-void  stringToBin(String str, int bits, int* out){
-  int num = str.toInt();
-  for(int i=bits-1; i>=0; i--){
-    if(num/pow(2, i)>=1){
-      out[bits-1-i]=1;
-      num -= pow(2,i);
-    } else{
-      out[bits-1-i]=0;
-    }
-  }
-}
-
-
-
+IO io;
 
 void setup() {
   Serial.begin(115200);
-
-  pinMode(0, OUTPUT);
 
   //Connect to WiFi
   WiFi.begin(ssid, password);
@@ -53,15 +38,15 @@ void setup() {
   
   //Initialise the socket
   socket.init();
+
+  //Initialise IO system
+  io.init(socket);
 }
+
+String temp[4] = {"test", "test", "Test", "test"};
 
 void loop() {
   page.loop();
   socket.loop();
-//  Enabled indicator
-  if(socket.getEnabled()){
-    digitalWrite(0, LOW);
-  } else{
-    digitalWrite(0, HIGH);
-  }
+  io.loop();
 }
