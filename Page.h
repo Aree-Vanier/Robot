@@ -1,3 +1,6 @@
+#ifndef Page_h
+#define Page_h
+
 #include <Arduino.h>
 
 class Page{
@@ -6,3 +9,5 @@ class Page{
     void loop();
   private:
 };
+
+#endif
