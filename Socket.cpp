@@ -2,10 +2,11 @@
 #include <Arduino.h>
 #include <WebSocketsServer.h>
 
-//Create the servers
-WebSocketsServer webSocket = WebSocketsServer(81);
+bool enabled;
 
-void Socket::webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length){
+WebSocketsServer s = WebSocketsServer(81);
+
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length){
   Serial.println("An event occured");
   if(type == WStype_TEXT){
     String in = "";
@@ -14,41 +15,52 @@ void Socket::webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_
     }
     Serial.println(in);
     if(in=="en"){
-      this->enabled = true;
+      enabled = true;
       char* c = "|en|";
-      webSocket.broadcastTXT(c, sizeof(c));
+      s.broadcastTXT(c, sizeof(c));
     }
     if(in=="di"){
-      this->enabled = false;
+      enabled = false;
       char* c = "|di|";
-      webSocket.broadcastTXT(c, sizeof(c));
+      s.broadcastTXT(c, sizeof(c));
     }
   }
   if(type == WStype_CONNECTED){
     char* c = "conn";
-    webSocket.broadcastTXT(c, sizeof(c));
+    s.broadcastTXT(c, sizeof(c));
     delay(50);
-    if(this->enabled) c="|en|";
+    if(enabled) c="|en|";
     else c="|di|";
-    webSocket.broadcastTXT(c, sizeof(c));
+    s.broadcastTXT(c, sizeof(c));
     Serial.println("Connected");
   }
   if(type == WStype_DISCONNECTED){
-    this->enabled = false;
+    enabled = false;
     Serial.println("Disconnected");
   }
 }
 
 void Socket::init(){
-  webSocket.begin();
 
-  webSocket.onEvent(this->webSocketEvent);
+  s.onEvent(webSocketEvent);
+  
+  s.begin();
+
+  s.onEvent(webSocketEvent);
 }
 
 void Socket::loop(){
-  webSocket.loop();
+  s.loop();
   if(Serial.available() > 0){
     char c[] = {(char)Serial.read()};
-    webSocket.broadcastTXT(c, sizeof(c)); 
+    s.broadcastTXT(c, sizeof(c)); 
   }
+}
+
+bool Socket::getEnabled(){
+  return enabled;
+}
+
+bool Socket::setEnabled(bool b){
+  enabled = b;
 }

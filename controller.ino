@@ -58,8 +58,8 @@ void setup() {
 void loop() {
   page.loop();
   socket.loop();
-  Enabled indicator
-  if(socket.enabled){
+//  Enabled indicator
+  if(socket.getEnabled()){
     digitalWrite(0, LOW);
   } else{
     digitalWrite(0, HIGH);
