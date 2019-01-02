@@ -11,7 +11,6 @@ class Socket {
     bool setEnabled(bool b);
     int getRegister(int reg);
   private:
-  int registers[4] = {0,15,16,31};
 };
 
 #endif

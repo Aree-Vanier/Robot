@@ -70,10 +70,10 @@ char webpage[] PROGMEM = R"=====(
     }
   </style>
   <script>
-    var Socket;
+    var socket;
     function init(){
-       Socket = new WebSocket("ws://"+window.location.hostname+":81/");
-       Socket.onmessage = function(event){
+       socket = new WebSocket("ws://"+window.location.hostname+":81/");
+       socket.onmessage = function(event){
         console.log(event.data);
         if(event.data=="conn"){
           document.getElementById("status").innerHTML="Connected";
@@ -91,15 +91,20 @@ char webpage[] PROGMEM = R"=====(
     }
     function update(element){
       console.log(element.value);
-      Socket.send(element.value)
+      socket.send(element.value)
     }
 
     function enable(){
       if(document.getElementById("enable").className=="false"){
-        Socket.send("en");
+        socket.send("en");
       } else{
-        Socket.send("di");
+        socket.send("di");
       }
+    }
+
+    function sendReg(element, reg){
+      console.log("REG"+reg+"|"+element.value);
+      socket.send("REG"+reg+"|"+element.value);
     }
   </script>
 </head>
@@ -109,7 +114,10 @@ char webpage[] PROGMEM = R"=====(
     <div class="beside"><button id="enable" class="locked" onclick="enable()">Enable</button></div>
   </div>
   <br/>
-  <input type="range" style="float:left" id="slider"/>
+  <input type="range" style="float:left" oninput="sendReg(this,0)" max="31" min="-31">
+  <input type="number" style="float:left" onChange="sendReg(this,1)"/>
+  <input type="number" style="float:left" onChange="sendReg(this,2)"/>
+  <input type="number" style="float:left" onChange="sendReg(this,3)"/>
 </body>
 </html>
 )=====";

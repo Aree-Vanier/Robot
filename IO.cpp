@@ -51,6 +51,8 @@ void IO::loop(){
   decToBin(value, this->numPinCount, pins);
   //Set output pins
   for(int i = 0; i<this->numPinCount; i++){
+    if(value < 0) digitalWrite(flipPin, HIGH);
+    else digitalWrite(flipPin, LOW);
     digitalWrite(this->numPins[i], pins[i]);
   }
   //Enable pin

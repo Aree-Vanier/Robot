@@ -6,6 +6,8 @@ bool enabled;
 
 WebSocketsServer s = WebSocketsServer(81);
 
+int registers[4] = {0,15,16,31};
+
 
 void enable(){
     enabled = true;
@@ -34,6 +36,13 @@ void onDisconnect(){
     Serial.println("Disconnected");
 }
 
+void setRegister(String in){
+  int reg = (in.substring(3,4)).toInt();
+  in.remove(0,in.indexOf("|")+1);
+  int value = in.toInt();
+  registers[reg] = value;
+}
+
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length){
   Serial.println("An event occured");
@@ -45,6 +54,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
     Serial.println(in);
     if(in=="en") enable();
     if(in=="di") disable();
+    if(in.startsWith("REG")) setRegister(in);
   }
   if(type == WStype_CONNECTED) onConnect();
   if(type == WStype_DISCONNECTED) onDisconnect();
@@ -67,7 +77,7 @@ void Socket::loop(){
 }
 
 int Socket::getRegister(int reg){
-  return this->registers[reg];
+  return registers[reg];
 }
 
 bool Socket::getEnabled(){
