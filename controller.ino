@@ -1,5 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <WebSocketsServer.h>
+#include <ESP8266WebServer.h>
+#include "Page.h"
 
 //Network Info
 const char* ssid = "BELL995";
@@ -90,7 +92,7 @@ void setup() {
 
 void loop() {
   page.loop();
-  server.handleClient();
+  webSocket.loop();
   if(Serial.available() > 0){
     char c[] = {(char)Serial.read()};
     webSocket.broadcastTXT(c, sizeof(c)); 

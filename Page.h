@@ -1,10 +1,8 @@
-#include <ESP8266WebServer.h>
-
+#include <Arduino.h>
 
 class Page{
   public:
     void init();
     void loop();
   private:
-    ESP8266WebServer* server;
 };
