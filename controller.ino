@@ -2,7 +2,6 @@
 #include <WebSocketsServer.h>
 #include <ESP8266WebServer.h>
 #include "Page.h"
-#include "Socket.h"
 
 //Network Info
 const char* ssid = "BELL995";
@@ -12,6 +11,8 @@ const char* password = "A1FDE7E6";
 //Create the webpage
 Page page;
 
+//Create the socket
+Socket socket;
 
 //Used to control output pins
 void  stringToBin(String str, int bits, int* out){
@@ -32,8 +33,6 @@ void  stringToBin(String str, int bits, int* out){
 void setup() {
   Serial.begin(115200);
 
-  Socket* socket = new Socket();
-
   pinMode(0, OUTPUT);
 
   //Connect to WiFi
@@ -53,16 +52,16 @@ void setup() {
   page.init();
   
   //Initialise the socket
-//  socket.init();
+  socket.init();
 }
 
 void loop() {
   page.loop();
-//  socket.loop();
+  socket.loop();
   //Enabled indicator
-//  if(socket.enabled){
-//    digitalWrite(0, LOW);
-//  } else{
-//    digitalWrite(0, HIGH);
-//  }
+  if(enabled){
+    digitalWrite(0, LOW);
+  } else{
+    digitalWrite(0, HIGH);
+  }
 }
