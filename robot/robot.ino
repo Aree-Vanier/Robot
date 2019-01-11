@@ -1,9 +1,16 @@
-void setup() {
-  // put your setup code here, to run once:
+#include <pt.h>
+#include "Input.h"
 
+static struct pt input;
+
+Input i;
+
+void setup() {
+  Serial.begin(9600);
+  PT_INIT(&input);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  i.thread(&input, 500);
+  Serial.println("MAIN");
 }

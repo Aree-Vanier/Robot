@@ -3,6 +3,8 @@
 
 class Input{
     public:
+      int thread(struct pt* pt, int interval);
+      void periodic();
     private:
 };
 

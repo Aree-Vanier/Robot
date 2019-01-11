@@ -1,6 +1,6 @@
 #include "Drivetrain.h"
 #include "Controller.h"
-
+#include "Arduino.h"
 
 Drivetrain::Drivetrain(int analog[4], int digital[4]){
   this->fl = new Controller(analog[0], digital[0]);
@@ -9,14 +9,14 @@ Drivetrain::Drivetrain(int analog[4], int digital[4]){
   this->br = new Controller(analog[3], digital[3]);
 }
 
-Drivetrain::drive(int lStick, int rStick){
+void Drivetrain::drive(int lStick, int rStick){
   //Map inputs to percentages
   float lSpeed = map(lStick, -31, 31, -100, 100)/100;
   float rSpeed = map(rStick, -31, 31, -100, 100)/100;
   this->drive(lSpeed, rSpeed);
 }
 
-Drivetrain::drive(float lSpeed, float rSpeed){
+void Drivetrain::drive(float lSpeed, float rSpeed){
   Serial.println(lSpeed, rSpeed);
 
   //Set left motors

@@ -6,8 +6,8 @@
 class Drivetrain{
     public:
         Drivetrain(int analog[4], int digital[4]);
-        drive(int lStick, int rStick);
-        drive(float lSPeed, float rSpeed);
+        void drive(int lStick, int rStick);
+        void drive(float lSpeed, float rSpeed);
     private:
       Controller* fl;
       Controller* fr;
