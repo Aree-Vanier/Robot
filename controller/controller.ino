@@ -6,8 +6,8 @@
 #include "IO.h"
 
 //Network Info
-const char* ssid = "BELL995";
-const char* password = "A1FDE7E6";
+const char* ssid = "LDSB";
+const char* password = "19812114D38DDDSDFVOPMJEW98452985HF587349Y6T73HTG89H";
 
 
 //Create the webpage
