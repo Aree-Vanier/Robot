@@ -45,13 +45,11 @@ void setRegister(String in){
 
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length){
-  Serial.println("An event occured");
   if(type == WStype_TEXT){
     String in = "";
     for(int i = 0; i<length; i++){
       in+=(char)payload[i];
     }
-    Serial.println(in);
     if(in=="en") enable();
     if(in=="di") disable();
     if(in.startsWith("REG")) setRegister(in);
