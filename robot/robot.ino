@@ -12,5 +12,4 @@ void setup() {
 
 void loop() {
   i.thread(&input);
-  Serial.println("MAIN");
 }

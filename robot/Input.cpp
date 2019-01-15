@@ -4,9 +4,9 @@
 
 const int inPinCount = 6;
 //Pins used to send value, inPin[0] is the positive/negative flag
-const int inPins[inPinCount] = {0,1,2,3,4,5};
+const int inPins[inPinCount] = {27,22,23,24,25,26};
 const int outPinCount = 2;
-const int outPins[outPinCount] = {6,7};
+const int outPins[outPinCount] = {30,31};
 const int interval = 250;
 
 int activeReg = 0;
@@ -35,9 +35,14 @@ int Input::thread(struct pt* pt){
 
 void Input::periodic(){
   //Read previous register
+  Serial.print(activeReg+"\t");
   byte in[6];
   for(int i = 0; i<inPinCount; i++){
-    in[i] = digitalRead[i];
+    in[i] = digitalRead(inPins[i]);
+    Serial.print(inPins[i]);
+    Serial.print(":");
+    Serial.print(digitalRead(inPins[i]));
+    Serial.print(" ");
   }
 
   int val = 0;
@@ -49,17 +54,20 @@ void Input::periodic(){
     val*=-1;
   }
 
+  Serial.print("\t"+val);
+
   //Save the register value
   this->registers[activeReg]=val;
 
   //Select next register
-  activeReg ++;
+//  activeReg ++;
   if(activeReg == 0){digitalWrite(outPins[0], LOW);digitalWrite(outPins[1], LOW);}
-  if(activeReg == 1){digitalWrite(outPins[0], LOW);digitalWrite(outPins[1], HIGH);}
-  if(activeReg == 2){digitalWrite(outPins[0], HIGH);digitalWrite(outPins[1], LOW);}
-  if(activeReg == 3){digitalWrite(outPins[0], HIGH);digitalWrite(outPins[1], HIGH);}
+//  if(activeReg == 1){digitalWrite(outPins[0], LOW);digitalWrite(outPins[1], HIGH);}
+//  if(activeReg == 2){digitalWrite(outPins[0], HIGH);digitalWrite(outPins[1], LOW);}
+//  if(activeReg == 3){digitalWrite(outPins[0], HIGH);digitalWrite(outPins[1], HIGH);}
   
   //Wait for interval to get result
+  Serial.println();
 }
 
 //Output selected register
