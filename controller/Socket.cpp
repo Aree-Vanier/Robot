@@ -1,6 +1,7 @@
 #include "Socket.h"
 #include <Arduino.h>
 #include <WebSocketsServer.h>
+#include <pt.h>
 
 bool enabled;
 
@@ -8,6 +9,7 @@ WebSocketsServer s = WebSocketsServer(81);
 
 int registers[4] = {0,15,16,31};
 
+int sockInterval = 100;
 
 void enable(){
     enabled = true;
@@ -66,7 +68,19 @@ void Socket::init(){
   s.onEvent(webSocketEvent);
 }
 
-void Socket::loop(){
+int Socket::thread(struct pt* pt){
+  static unsigned long timestamp = 0;
+  PT_BEGIN(pt);
+  while(1){
+      timestamp = millis();
+      PT_WAIT_UNTIL(pt, millis()-timestamp > sockInterval);
+      this->periodic();
+  }
+  PT_END(pt);
+  Serial1.begin(9600);
+}
+
+void Socket::periodic(){
   s.loop();
   if(Serial.available() > 0){
     char c[] = {(char)Serial.read()};

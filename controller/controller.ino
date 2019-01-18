@@ -1,6 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <WebSocketsServer.h>
 #include <ESP8266WebServer.h>
+#include <pt.h>
 #include "Page.h"
 #include "Socket.h"
 #include "IO.h"
@@ -14,11 +15,13 @@ const char* password = "19812114D38DDDSDFVOPMJEW98452985HF587349Y6T73HTG89H";
 Page page;
 
 Socket socket;
+static struct pt SocketStruct;
 
 IO io;
+static struct pt IOStruct;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   //Connect to WiFi
   WiFi.begin(ssid, password);
@@ -46,7 +49,7 @@ void setup() {
 String temp[4] = {"test", "test", "Test", "test"};
 
 void loop() {
-  page.loop();
-  socket.loop();
-  io.loop();
+//  page.loop();
+//  socket.loop();
+  io.thread(&IOStruct);
 }
