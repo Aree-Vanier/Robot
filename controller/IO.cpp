@@ -5,7 +5,7 @@
 
 Socket sock;
 
-int IOInterval = 100;
+int IOInterval = 10;
 
 //Used to control communications
 

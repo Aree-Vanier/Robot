@@ -1,9 +1,11 @@
 #ifndef Input_h
 #define Input_h
 
+#include "Drivetrain.h"
+
 class Input{
     public:
-      void init();
+      void init(Drivetrain *d);
       int thread(struct pt* pt);
       void periodic();
       int getRegister(int reg);
@@ -14,6 +16,7 @@ class Input{
         };
     private:
       int registers[4];
+      Drivetrain* drivetrain;
 };
 
 #endif

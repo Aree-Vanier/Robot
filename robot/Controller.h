@@ -13,7 +13,7 @@ class Controller{
         int directionPin; //Reverse pin
         float speed;   //Current speed
         int targetSpeed; //Target speed
-        float accel = 5; //Acceleration
+        float accel = 20; //Acceleration
 
 };
 

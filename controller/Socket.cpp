@@ -82,10 +82,6 @@ int Socket::thread(struct pt* pt){
 
 void Socket::periodic(){
   s.loop();
-  if(Serial.available() > 0){
-    char c[] = {(char)Serial.read()};
-    s.broadcastTXT(c, sizeof(c)); 
-  }
 }
 
 int Socket::getRegister(int reg){

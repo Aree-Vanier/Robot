@@ -14,12 +14,12 @@ Controller::Controller(int speedPin, int directionPin){
 //if reverse, pin 2 is true, speed is 255-speed
 
 void Controller::set(float percent){
-    Serial.println("IN: "+(String) percent);
+//    Serial.println("IN: "+(String) percent);
     if(percent > 1) percent = 1;
     if(percent < -1) percent = -1;
-    Serial.println(percent);
+//    Serial.println(percent);
     this->targetSpeed = (int) map(percent*100, -100,100,-255,255);
-    Serial.println(this->targetSpeed);
+//    Serial.println(this->targetSpeed);
 }
 
 double Controller::getSpeed(){
