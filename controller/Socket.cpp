@@ -7,7 +7,8 @@ bool enabled;
 
 WebSocketsServer s = WebSocketsServer(81);
 
-int registers[4] = {0,15,16,31};
+//range is 0-255, so 125=0;
+int registers[4] = {125,125,125,125};
 
 int sockInterval = 100;
 
