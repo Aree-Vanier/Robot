@@ -69,13 +69,13 @@ char webpage[] PROGMEM = R"=====(
     input{
       margin-left:20%;
       display:block;
-      width:60%;
+      width:75%;
       margin-bottom:100px !important;
     }
     
     input.vertical{
       -webkit-appearance: slider-vertical;
-      width:200px;
+      width:20%;
       margin:0;
       height:300px;
     }
@@ -135,8 +135,8 @@ char webpage[] PROGMEM = R"=====(
     <div class="beside"><button id="enable" class="locked" onclick="enable()">Enable</button></div>
   </div>
   <br/>
-  <input type="range" class="vertical" style="float:left;margin-left:20%" oninput="sendReg(this,0)" max="250" min="0" step="5">
-  <input type="range" class="vertical" style="float:right;margin-right:20%" oninput="sendReg(this,1)" max="250" min="0" step="5">
+  <input type="range" class="vertical" style="float:left;margin-left:20%;margin-right:10%" oninput="sendReg(this,0)" max="250" min="0" step="5">
+  <input type="range" class="vertical" style="float:right;margin-right:20%;margin-left:10%" oninput="sendReg(this,1)" max="250" min="0" step="5">
   <input type="range" style="float:left" oninput="sendReg(this,2)" max="250" min="0" step="5">
 </body>
 </html>
