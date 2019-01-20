@@ -5,10 +5,10 @@
 int drivetrainInterval = 5;
 
 Drivetrain::Drivetrain(int analog[4], int digital[4]){
-  this->fl = new Controller(analog[0], digital[0]);
-  this->bl = new Controller(analog[1], digital[1]);
+//  this->fl = new Controller(analog[0], digital[0]);
+//  this->br = new Controller(analog[1], digital[1]);
   this->fr = new Controller(analog[2], digital[2]);
-  this->br = new Controller(analog[3], digital[3]);
+//  this->bl = new Controller(analog[3], digital[3]);
 }
 
 void Drivetrain::drive(float lSpeed, float rSpeed){
@@ -34,8 +34,8 @@ int Drivetrain::thread(struct pt* pt){
 }
 
 void Drivetrain::periodic(){
-      this->fl->drive();
+//      this->fl->drive();
       this->fr->drive();
-      this->bl->drive();
-      this->br->drive();
+//      this->bl->drive();
+//      this->br->drive();
 }
