@@ -5,10 +5,12 @@
 #include "Page.h"
 #include "Socket.h"
 #include "IO.h"
+#include "config.h"
 
 //Network Info
-const char* ssid = "LDSB";
-const char* password = "19812114D38DDDSDFVOPMJEW98452985HF587349Y6T73HTG89H";
+const char* ssid = SSID;
+const char* password = PASSWORD;
+
 
 
 //Create the webpage
