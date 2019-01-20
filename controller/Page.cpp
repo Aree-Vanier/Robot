@@ -11,7 +11,7 @@ char webpage[] PROGMEM = R"=====(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
+  <title>Gregbot 9000</title>
   <style>
     body{
       background-color:black;
@@ -70,22 +70,34 @@ char webpage[] PROGMEM = R"=====(
       margin-left:20%;
       display:block;
       width:60%;
+      margin-bottom:100px !important;
+    }
+    
+    input.vertical{
+      -webkit-appearance: slider-vertical;
+      width:200px;
+      margin:0;
+      height:300px;
     }
   </style>
   <script>
     var socket;
     function init(){
+       //Create the socket           Point at own port 81
        socket = new WebSocket("ws://"+window.location.hostname+":81/");
        socket.onmessage = function(event){
         console.log(event.data);
+         //If the message announces connection
         if(event.data=="conn"){
           document.getElementById("status").innerHTML="Connected";
           document.getElementById("status").className="true";
         }
+         //If the message announces enabled
         if(event.data=="|en|"){
           document.getElementById("enable").innerHTML="Disable";
           document.getElementById("enable").className="true";
         }
+         //If the message annouces disabled
         if(event.data=="|di|"){
           document.getElementById("enable").innerHTML="Enable";
           document.getElementById("enable").className="false";
@@ -96,7 +108,8 @@ char webpage[] PROGMEM = R"=====(
       console.log(element.value);
       socket.send(element.value)
     }
-
+    
+    //Toggle the enable button
     function enable(){
       if(document.getElementById("enable").className=="false"){
         socket.send("en");
@@ -104,8 +117,13 @@ char webpage[] PROGMEM = R"=====(
         socket.send("di");
       }
     }
-
+    
+    //Send register value
     function sendReg(element, reg){
+      //Deadzone
+      if(Math.abs(125-element.value) <= 10){
+        element.value = 125;
+      }
       console.log("REG"+reg+"|"+element.value);
       socket.send("REG"+reg+"|"+element.value);
     }
@@ -117,10 +135,9 @@ char webpage[] PROGMEM = R"=====(
     <div class="beside"><button id="enable" class="locked" onclick="enable()">Enable</button></div>
   </div>
   <br/>
-  <input type="range" style="float:left" oninput="sendReg(this,0)" max="0" min="250">
-  <input type="number" style="float:left" onChange="sendReg(this,1)"/>
-  <input type="number" style="float:left" onChange="sendReg(this,2)"/>
-  <input type="number" style="float:left" onChange="sendReg(this,3)"/>
+  <input type="range" class="vertical" style="float:left;margin-left:20%" oninput="sendReg(this,0)" max="250" min="0" step="5">
+  <input type="range" class="vertical" style="float:right;margin-right:20%" oninput="sendReg(this,1)" max="250" min="0" step="5">
+  <input type="range" style="float:left" oninput="sendReg(this,2)" max="250" min="0" step="5">
 </body>
 </html>
 )=====";
