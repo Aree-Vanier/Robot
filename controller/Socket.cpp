@@ -77,7 +77,6 @@ int Socket::thread(struct pt* pt){
       this->periodic();
   }
   PT_END(pt);
-  Serial1.begin(9600);
 }
 
 void Socket::periodic(){

@@ -2,6 +2,8 @@
 #include <ESP8266WebServer.h>
 #include <pt.h>
 
+int pageInterval = 1000;
+
 //==== Start of HTML ====
 char webpage[] PROGMEM = R"=====(
 <!DOCTYPE html>
@@ -115,7 +117,7 @@ char webpage[] PROGMEM = R"=====(
     <div class="beside"><button id="enable" class="locked" onclick="enable()">Enable</button></div>
   </div>
   <br/>
-  <input type="range" style="float:left" oninput="sendReg(this,0)" max="31" min="-31">
+  <input type="range" style="float:left" oninput="sendReg(this,0)" max="0" min="250">
   <input type="number" style="float:left" onChange="sendReg(this,1)"/>
   <input type="number" style="float:left" onChange="sendReg(this,2)"/>
   <input type="number" style="float:left" onChange="sendReg(this,3)"/>
@@ -135,6 +137,17 @@ void Page::init(){
   server.begin();
 }
 
-void Page::loop(){
+int Page::thread(struct pt* pt){
+  static unsigned long timestamp = 0;
+  PT_BEGIN(pt);
+  while(1){
+      timestamp = millis();
+      PT_WAIT_UNTIL(pt, millis()-timestamp > pageInterval);
+      this->periodic();
+  }
+  PT_END(pt);
+}
+
+void Page::periodic(){
   server.handleClient();
 }

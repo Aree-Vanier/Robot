@@ -13,6 +13,7 @@ const char* password = "19812114D38DDDSDFVOPMJEW98452985HF587349Y6T73HTG89H";
 
 //Create the webpage
 Page page;
+static struct pt PageStruct;
 
 Socket socket;
 static struct pt SocketStruct;
@@ -46,10 +47,8 @@ void setup() {
   io.init(socket);
 }
 
-String temp[4] = {"test", "test", "Test", "test"};
-
 void loop() {
-//  page.loop();
-//  socket.loop();
+  page.thread(&PageStruct);
+  socket.thread(&SocketStruct);
   io.thread(&IOStruct);
 }

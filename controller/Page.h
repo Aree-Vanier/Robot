@@ -7,7 +7,8 @@
 class Page{
   public:
     void init();
-    void loop();
+    int thread(struct pt* pt);
+    void periodic();
   private:
 };
 

@@ -33,7 +33,13 @@ void IO::periodic(){
   if(sock.getEnabled()) digitalWrite(this->enablePin, LOW);
   else digitalWrite(this->enablePin, HIGH);
   if(Serial.available() > 0){
-    Serial.println("D0|125|255");
+    String out = "D";
+    out += sock.getRegister(0);
+    out += "|";
+    out += sock.getRegister(1);
+    out += "|";
+    out += sock.getRegister(2);
+    Serial.println(out);
     
     while(Serial.available() > 0){
       Serial.read();
