@@ -5,8 +5,8 @@
 static struct pt inputStruct;
 static struct pt drivetrainStruct;
 
-int aPins[4] = {2,3,4,5};
-int dPins[4] = {42,43,44,45};
+int aPins[4] = {2,5,4,3};
+int dPins[4] = {42,45,44,43};
 
 Input input;
 Drivetrain drive(aPins, dPins);
