@@ -2,8 +2,12 @@
 #include <ESP8266WebServer.h>
 #include <pt.h>
 
+//This is a class used entirely to store the HTML and code to run the webpage, so it doesn't clog up other files
+
+//Interval(ms) between thread iterations
 int pageInterval = 1000;
 
+//The JS is partially documented (Read at own risk)
 //==== Start of HTML ====
 char webpage[] PROGMEM = R"=====(
 <!DOCTYPE html>
@@ -151,12 +155,12 @@ char webpage[] PROGMEM = R"=====(
 </body>
 </html>
 )=====";
-
 //===== End of HTML =====
 
-
+//Web server
 ESP8266WebServer server;
-    
+
+//Setup page
 void Page::init(){
   //Setup hadlers
   server.on("/", [](){server.send_P(200, "text/html", webpage);});
@@ -164,6 +168,7 @@ void Page::init(){
   server.begin();
 }
 
+//Called to handle the threading
 int Page::thread(struct pt* pt){
   static unsigned long timestamp = 0;
   PT_BEGIN(pt);
@@ -175,6 +180,7 @@ int Page::thread(struct pt* pt){
   PT_END(pt);
 }
 
+//Function call regularly by thread
 void Page::periodic(){
   server.handleClient();
 }

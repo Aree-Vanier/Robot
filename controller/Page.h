@@ -6,8 +6,11 @@
 
 class Page{
   public:
+    //Initialise
     void init();
+    //Called to handle the threading
     int thread(struct pt* pt);
+    //Function call regularly by thread
     void periodic();
   private:
 };

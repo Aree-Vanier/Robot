@@ -21,6 +21,4 @@ void setup() {
 void loop() {
   input.thread(&inputStruct);
   drive.thread(&drivetrainStruct);
-//  input.periodic();
-//  drive.periodic();
 }

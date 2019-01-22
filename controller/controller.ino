@@ -11,17 +11,16 @@
 const char* ssid = SSID;
 const char* password = PASSWORD;
 
-
-
 //Create the webpage
 Page page;
 static struct pt PageStruct;
-
+//Create the socket
 Socket socket;
 static struct pt SocketStruct;
-
+//Create the IO system
 IO io;
 static struct pt IOStruct;
+
 
 void setup() {
   Serial.begin(9600);
@@ -50,6 +49,7 @@ void setup() {
 }
 
 void loop() {
+  //Run each thread
   page.thread(&PageStruct);
   socket.thread(&SocketStruct);
   io.thread(&IOStruct);
