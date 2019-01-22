@@ -3,11 +3,16 @@
 
 class Controller{
     public:
+        //Constuctor, requires an analog pin and a digital pin
         Controller(int speedPin, int directionPin);
-        void set(float percent); // Called to set target speed
+        //Called to set the targe speed
+        void set(float percent);
+        //Get the current speed, returns current speed
         double getSpeed();
-        void stop();  //E-Stop, will stop all motor functions immediately
-        void drive(); //Called repetiviely to smooth acceleration
+        //Stop the controller instantly
+        void stop();
+        //Called regulaly to smooth acceleration
+        void drive();
     private:
         int speedPin; //Forward pin
         int directionPin; //Reverse pin
