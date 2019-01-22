@@ -75,7 +75,7 @@ char webpage[] PROGMEM = R"=====(
     
     input.vertical{
       -webkit-appearance: slider-vertical;
-      width:200px;
+      width:20%;
       margin:0;
       height:300px;
     }
